@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from detect import localize_objects
 import os
 from werkzeug.utils import secure_filename
+from ChatGPT import chatgpt
 app = Flask(__name__)
 
 
@@ -24,6 +25,7 @@ def upload_media():
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
     response_string=localize_objects("./images/1.jpeg")
+    response_string = chatgpt.solution(response_string)
     response = jsonify({'msg': response_string})
     os.remove('./images/1.jpeg')
     return response
