@@ -24,7 +24,7 @@ def upload_media():
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
     response=localize_objects("./images/1.jpeg")
-    return {response}
+    return jsonify({'msg': response})
 
 
     
