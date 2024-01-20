@@ -3,7 +3,6 @@ from flask import jsonify
 client = OpenAI()
 
 # Once you add your API key below, make sure to not share it with anyone! The API key should remain private.
-OPENAI_API_KEY= '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'
 
 # completion = client.chat.completions.create(
 #   model="gpt-3.5-turbo",
