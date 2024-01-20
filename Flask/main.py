@@ -27,10 +27,9 @@ def upload_media():
 
 
     
-@app.route('/', methods = ["GET"])
+@app.route('/')
 def hello():
-    url = request.args.get("url_image")
-    return localize_objects(url)
+    return 'Server Worked'
     # return "Hello"
     
 
