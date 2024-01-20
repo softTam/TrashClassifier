@@ -30,17 +30,17 @@ export default function App() {
         const data = await cameraRef.current.takePictureAsync();
         console.log(data);
         setImage(data.uri);
-        /*
+        
         var photo = {
           uri: data.uri,
           type: 'image/jpeg',
-          name: '1.jpg',
+          name: '1.jpeg',
         };
         var form = new FormData();
         form.append("Input_Image", photo);
         
         fetch(
-          'http://127.0.0.1:8000/upload',
+          'https://real-trash-app.onrender.com/media/upload',
           {
             body: form,
             method: "PUT",
@@ -54,10 +54,11 @@ export default function App() {
         })
         .then((responseData) => {
           alert("Succes "+ responseData)
-        }).done();*/
+        }).done();
       } catch(e) {
         console.log(e);
       }
+  
 
 
     }
