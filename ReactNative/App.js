@@ -77,7 +77,7 @@ export default function App() {
   */
   return (
     <View style={styles.container}>
-      <Image source={require('./assets/icon.png')} style={styles.logo}/>
+      <Image source={require('./assets/applogo2.png')} style={styles.logo}/>
 
       <View style={styles.header}>
         <TouchableOpacity style={styles.touchable}>
@@ -107,10 +107,11 @@ const styles = StyleSheet.create({
   },
 
   logo: {
-    marginTop: 40,
-    width: 50,
-    height: 50,
+    marginTop: 50,
+    width: 90,
+    height: 140,
     flexDirection: 'row',
+    marginLeft: 20
   },
 
   camera: {
