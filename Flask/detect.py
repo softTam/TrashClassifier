@@ -1,6 +1,6 @@
 import os
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"]= "/Users/banghuynh/trash-app/norse-lens-411805-d1b767e58bfa.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"]= "./norse-lens-411805-d1b767e58bfa.json"
 def localize_objects(path):
     """Localize objects in the local image.
     Args:

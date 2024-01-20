@@ -5,7 +5,7 @@ from werkzeug.utils import secure_filename
 app = Flask(__name__)
 
 
-UPLOAD_FOLDER="/Users/banghuynh/trash-app/images"
+UPLOAD_FOLDER="./images"
 
 ALLOWED_EXTENSIONS = set(['txt','pdf','png', 'jpg','jpeg','gif'])
 
@@ -29,7 +29,8 @@ def upload_media():
     
 @app.route('/')
 def hello():
-    return 'Server Worked'
+    url=localize_objects("./images/banana.jpeg")
+    return url
     # return "Hello"
     
 
