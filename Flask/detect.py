@@ -16,7 +16,10 @@ def localize_objects(path):
 
     objects = client.object_localization(image=image).localized_object_annotations
 
-    return objects[0].name
+    if (objects):
+        return objects[0].name
+    else:
+        return 'can not detect object'
 
 if __name__ == '__main__':
     print(localize_objects('./banana.jpeg'))
