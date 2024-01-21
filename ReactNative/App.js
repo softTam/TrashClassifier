@@ -44,12 +44,13 @@ export default function App() {
           uri: photo.uri,
         });
         // {"file": photo.uri}
-        fetch("https://horrible-octopus-32.loca.lt/media/upload", {
+        fetch("http://rnjnr-169-233-211-29.a.free.pinggy.link/media/upload", {
           method: "POST",
           body: image
         })
           .then(response => response.json())
           .then(response => {
+            console.log(response)
             setMyLabel(response['Category'])
             setMySolution(response['Msg'])
             console.log("upload succes", response['Category']);
@@ -83,7 +84,7 @@ export default function App() {
       </View>
       <Modal visible={isModalVisible} style={styles.modal}>
         <View style={styles.response}>
-          <Text style={styles.label}> {myLabel}</Text>
+            <Text style={styles.label}> {myLabel}</Text>
           <Text style={styles.solution}> {mySolution}</Text>
         </View>
           <TouchableOpacity onPress={()=>functionCombined()} style={styles.close_button}>
@@ -160,17 +161,29 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: 'black',
     borderWidth: 1,
-    marginTop: 400
   },
   modal: {
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'red'
   },
 
   label: {
     marginTop: 200,
+    marginHorizontal: 20,
     fontSize: 50,
-    backgroundColor: 'red',
     height: 100,
+    justifyContent:'center',
+    alignItems: 'center',
   },
+  solution: {
+    height: 300,
+    marginLeft: 20,
+    fontSize: 20
+  },
+  response: {
+    width: 500,
+    borderWidth: 2
+  },
+
 });
