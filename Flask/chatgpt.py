@@ -15,20 +15,21 @@ messages=[
 # print(completion.choices[0].message)
 
 def solution(item_description):
-  # item_description = "banana peel"
-  question1 = "Is a " + item_description + " compostable, recyclable, or disposable? (one word answer)"
-  # print(question1)
-  message = question1
-  if message:
-    messages.append(
-      {"role": "user", "content": message},
-    )
-    completion = client.chat.completions.create(model="gpt-3.5-turbo", messages=messages)
-  response1 = completion.choices[0].message.content
-  # print(f"{response1}")
-  edit_response1 = response1.replace(".", "")   # trash classification
+  item_description = item_description[:-1]
+  
+  # question1 = "Is a " + item_description + " compostable, recyclable, or disposable? (one word answer)"
+  # # print(question1)
+  # message = question1
+  # if message:
+  #   messages.append(
+  #     {"role": "user", "content": message},
+  #   )
+  #   completion = client.chat.completions.create(model="gpt-3.5-turbo", messages=messages)
+  # response1 = completion.choices[0].message.content
+  # # print(f"{response1}")
+  # edit_response1 = response1.replace(".", "")   # trash classification
 
-  question2 = "What to do with " + item_description + " as " + edit_response1 + " trash? (summary)"
+  question2 = "How do I deal with " + item_description + " trash? (summary)"
   # print(question2)
   message2 = question2
   if message2:
@@ -37,7 +38,7 @@ def solution(item_description):
     )
     completion = client.chat.completions.create(model="gpt-3.5-turbo", messages=messages)
   response2 = completion.choices[0].message.content   # handling instruction
-  return {"Category" : edit_response1, "Msg" : response2}
+  return {"Category" : item_description, "Msg" : response2}
 
 
 

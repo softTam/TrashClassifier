@@ -106,9 +106,9 @@ def predict_image_classification_sample(
         
 result = predict_image_classification_sample(
     project="932924563321",
-    endpoint_id="99477215011405824",
+    endpoint_id="4111058583091675136",
     location="us-central1",
-    filename="plasticbottle.jpeg.jpg"
+    filename="./Flask/images/banana.jpeg"
 )
 
 print(result)

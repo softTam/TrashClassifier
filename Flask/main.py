@@ -73,12 +73,13 @@ def upload_media():
         
         classification_result = predict_image_classification_sample(
                                 project="932924563321",
-                                endpoint_id="99477215011405824",
+                                endpoint_id="4111058583091675136",
                                 location="us-central1",
                                 filename=f"./images/{filename}"
                             )
-        response = jsonify({'msg': classification_result})
-        # response = jsonify(response_string)
+        response_string = solution(classification_result)
+
+        response = jsonify(response_string)
 
         os.remove(f'./images/{filename}')
         return response
