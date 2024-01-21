@@ -17,7 +17,7 @@ def localize_objects(path):
     objects = client.object_localization(image=image).localized_object_annotations
 
     if (objects):
-        return objects[0].name
+        return [x.name for x in objects]
     else:
         return 'cannot detect object'
 

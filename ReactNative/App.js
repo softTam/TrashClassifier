@@ -70,7 +70,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Image source={require('./assets/applogo2.png')} style={styles.logo}/>
-
+      <Image source={require('./assets/logowaste3.png')} />
       <View style={styles.header}>
         <TouchableOpacity style={styles.touchable}>
           <Text>Question?</Text>

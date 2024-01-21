@@ -16,7 +16,7 @@ messages=[
 
 def solution(item_description):
   # item_description = "banana peel"
-  question1 = "Is a " + item_description + " compostable, recyclable, or disposable? (one word answer)"
+  question1 = "Is a " + item_description[0] + " compostable, recyclable, or disposable? (one word answer)"
   # print(question1)
   message = question1
   if message:
@@ -28,7 +28,7 @@ def solution(item_description):
   # print(f"{response1}")
   edit_response1 = response1.replace(".", "")   # trash classification
 
-  question2 = "What to do with " + item_description + " as " + edit_response1 + " trash? (summary)"
+  question2 = "What to do with " + item_description[0] + " as " + edit_response1 + " trash? (summary)"
   # print(question2)
   message2 = question2
   if message2:

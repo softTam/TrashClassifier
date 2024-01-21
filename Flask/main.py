@@ -8,8 +8,6 @@ app = Flask(__name__)
 
 UPLOAD_FOLDER="./images"
 
-def allowed_file(filename):
-    return '.' in filename
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 @app.route('/media/upload', methods = ['POST'])
