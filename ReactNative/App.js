@@ -27,12 +27,32 @@ export default function App() {
   const takePicture = async () => {
     if(cameraRef) {
       try{
-        const data = await cameraRef.current.takePictureAsync();
-        console.log(data);
+        const photo = await cameraRef.current.takePictureAsync();
+        console.log(photo);
 
-        const response = await fetch("https://real-trash-app.onrender.com/");
-        const movies = await response.json();
-        console.log(movies);
+        const image = new FormData();
+        image.append("file", {
+          name: 'file',
+          type: photo.type,
+          uri: photo.uri,
+        });
+        // {"file": photo.uri}
+        console.log(image)
+        fetch("https://real-trash-app.onrender.com/media/upload", {
+          method: "POST",
+          body: image
+        })
+          .then(response => response.json())
+          .then(response => {
+            console.log("upload succes", response);
+            alert("Upload success!");
+            this.setState({ photo: null });
+          })
+          .catch(error => {
+            console.log("upload error", error);
+            alert("Upload failed!");
+          });
+
         } catch(e) {
           console.log(e);
         }
