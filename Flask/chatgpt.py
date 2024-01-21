@@ -37,7 +37,7 @@ def solution(item_description):
     )
     completion = client.chat.completions.create(model="gpt-3.5-turbo", messages=messages)
   response2 = completion.choices[0].message.content   # handling instruction
-  return {"Category" : edit_response1, "Msg" : response2}
+  return {"Object": item_description, "Category" : edit_response1, "Msg" : response2}
 
 
 
