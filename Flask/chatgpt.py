@@ -28,7 +28,7 @@ def solution(item_description):
   # print(f"{response1}")
   edit_response1 = response1.replace(".", "")
 
-  question2 = "What to do with " + edit_response1 + "s? (summary)"
+  question2 = "What to do with " + item_description + " as " + edit_response1 + " trash? (summary)"
   # print(question2)
   message2 = question2
   if message2:

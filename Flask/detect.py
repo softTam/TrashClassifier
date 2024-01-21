@@ -19,7 +19,7 @@ def localize_objects(path):
     if (objects):
         return objects[0].name
     else:
-        return 'can not detect object'
+        return 'cannot detect object'
 
 if __name__ == '__main__':
     print(localize_objects('./banana.jpeg'))
