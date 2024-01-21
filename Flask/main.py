@@ -24,10 +24,10 @@ def upload_media():
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-    response_string=localize_objects("./images/1.jpeg")
+    response_string=localize_objects("./images/1.jpg")
     response_string = solution(response_string)
     response = jsonify({'msg': response_string})
-    os.remove('./images/1.jpeg')
+    os.remove('./images/1.jpg')
     return response
 
 
