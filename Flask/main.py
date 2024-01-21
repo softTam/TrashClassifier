@@ -8,10 +8,8 @@ app = Flask(__name__)
 
 UPLOAD_FOLDER="./images"
 
-ALLOWED_EXTENSIONS = set(['txt','pdf','png', 'jpg','jpeg','gif'])
-
 def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.',1)[1].lower() in ALLOWED_EXTENSIONS
+    return '.' in filename
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 @app.route('/media/upload', methods = ['POST'])
@@ -24,18 +22,19 @@ def upload_media():
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-    response_string=localize_objects("./images/1.jpg")
-    response_string = solution(response_string)
-    response = jsonify({'msg': response_string})
-    os.remove('./images/1.jpg')
-    return response
+        response_string=localize_objects(f"./images/{filename}")
+        response_string = solution(response_string)
+        response = jsonify({'msg': response_string})
+        os.remove(f'./images/{filename}')
+        return response
+    return jsonify({'error':'no file exisited'}), 400
 
 
     
 @app.route('/')
 def hello():
     url=localize_objects("./images/banana.jpeg")
-    return url
+    return jsonify({'say' : url})
     # return "Hello"
     
 
