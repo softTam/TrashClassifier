@@ -1,9 +1,20 @@
 import React, { useState, useEffect, useRef} from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Modal, SafeAreaView } from 'react-native';
 import { Camera, CameraType } from 'expo-camera';
 import { Entypo } from '@expo/vector-icons'
 import * as MediaLibrary from 'expo-media-library';
 import Button from './src/components/Button';
+
+const ModalPoup = ({visible, children}) => {
+  const [showModal, setShowModal] = useState(visible);
+  return (
+    <Modal transparent visible={true}>
+      <View> style={styles.modalBackground}
+        <View> style={styles.modalContainer}</View>
+      </View>
+    </Modal>
+  )
+}
 
 export default function App() {
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
@@ -11,7 +22,7 @@ export default function App() {
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [flash, setFlash] = useState(Camera.Constants.FlashMode.off);
   const cameraRef = useRef(null);
-  
+
   useEffect(() => {
     (async () => {
       MediaLibrary.requestPermissionsAsync();
@@ -55,38 +66,27 @@ export default function App() {
     }
   }
 
-  /*
-    <Camera
-        style={styles.camera}
-        type={type}
-        FlashMode={flash}
-        ref={cameraRef}
-        >
-      </Camera>
-      <View>
-        <Button title={'Take a picture'} icon="camera" />
-      </View>
-  */
   return (
     <View style={styles.container}>
-      <Image source={require('./assets/applogo2.png')} style={styles.logo}/>
-      <Image source={require('./assets/logowaste3.png')} />
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.touchable}>
-          <Text>Question?</Text>
-        </TouchableOpacity>
+      <View style={styles.logos}>
+        <Image source={require('./assets/applogo2.png')} style={styles.logo}/>
+        <Image source={require('./assets/logowaste3.png')} style={styles.logowaste}/>
       </View>
 
       <View style={styles.camera_holder}>
         {!image ?
-          <Camera style={styles.camera} type={type} FlashMode={flash} ref={cameraRef}>
+          <Camera style={styles.camera} type={type} FlashMode={flash} ref={cameraRef} autoFocus={Camera.Constants.AutoFocus.on}>
           </Camera>
           :
           <Image source={{uri: image}} style={styles.camera} />
         }
         <Button title={'Take a picture'} icon="camera" onPress={() => takePicture()}/>
       </View>
-
+        <View styles={{flex: 1, }}>
+          <ModalPoup visible = {visible}>
+          </ModalPoup>
+          <Button title='Press' onPress={() => setVisible(true)} />
+        </View>
     </View>
   );
 }
@@ -98,12 +98,27 @@ const styles = StyleSheet.create({
     padding: 15,
   },
 
+  logos: {
+    flexDirection:'row', 
+    alignItems:'center', 
+    justifyContent:'center'
+  },
+
   logo: {
-    marginTop: 50,
-    width: 90,
-    height: 140,
+    flex: 1,
+    width: 100,
+    height: 100,
     flexDirection: 'row',
-    marginLeft: 20
+    marginLeft: 20,
+    marginTop: 50
+  },
+
+  logowaste: {
+    marginTop: 50,
+    width: 100,
+    height: 110,
+    flex: 5,
+    flexDirection: 'row',
   },
 
   camera: {
@@ -114,8 +129,8 @@ const styles = StyleSheet.create({
   },
 
   camera_holder: {
-    marginTop: 50,
-    flex: 0.75,
+    marginTop: 30,
+    flex: 0.850,
     backgroundColor: '#74cb34',
     borderRadius: 20
   },
@@ -131,5 +146,11 @@ const styles = StyleSheet.create({
 
   touchable: {
     borderWidth: 1
+  },
+
+  modalContainer: {
+    width: '80%',
+    backgroundColor: 'white',
+    padding: 20
   }
 });
