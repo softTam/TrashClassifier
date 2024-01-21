@@ -86,19 +86,29 @@ def predict_image_classification_sample(
     response = client.predict(
         endpoint=endpoint, instances=instances, parameters=parameters
     )
-    print("response")
-    print(" deployed_model_id:", response.deployed_model_id)
+    # print("response")
+    # print(" deployed_model_id:", response.deployed_model_id)
     # See gs://google-cloud-aiplatform/schema/predict/prediction/image_classification_1.0.0.yaml for the format of the predictions.
     predictions = response.predictions
-    for prediction in predictions:
-        print(" prediction:", dict(prediction))
+
+    dictionary = dict(predictions[0])
+    return dictionary["displayNames"][0].strip('\'')
+
+    # print(dictionary["displayNames"][0].strip('\''))
+    # for d in dictionary:
+    #     print(d)
+    #     print(dictionary[d])
+    # for prediction in predictions:
+    #     print(" prediction:", dict(prediction))
 
 
 # [END aiplatform_predict_image_classification_sample]
         
-predict_image_classification_sample(
+result = predict_image_classification_sample(
     project="932924563321",
     endpoint_id="99477215011405824",
     location="us-central1",
-    filename="glassbottle.jpeg"
+    filename="plasticbottle.jpeg.jpg"
 )
+
+print(result)
