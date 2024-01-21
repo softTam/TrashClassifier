@@ -11,11 +11,12 @@ export default function App() {
   const [flash, setFlash] = useState(Camera.Constants.FlashMode.off);
   const cameraRef = useRef(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [myText, setMyText] = useState("Few Seconds ...");
-
+  const [myLabel, setMyLabel] = useState("Few Seconds ...");
+  const [mySolution, setMySolution] = useState("")
   functionCombined = () => {
     setIsModalVisible(false);
-    setMyText('Few seconds ...');
+    setMyLabel('Few seconds ...');
+    setMySolution('');
   } 
   useEffect(() => {
     (async () => {
@@ -43,13 +44,14 @@ export default function App() {
           uri: photo.uri,
         });
         // {"file": photo.uri}
-        fetch("https://wastewisely.loca.lt/media/upload", {
+        fetch("https://horrible-octopus-32.loca.lt/media/upload", {
           method: "POST",
           body: image
         })
           .then(response => response.json())
           .then(response => {
-            setMyText(response['Category'])
+            setMyLabel(response['Category'])
+            setMySolution(response['Msg'])
             console.log("upload succes", response['Category']);
             this.setState({ photo: null });
           })
@@ -81,7 +83,8 @@ export default function App() {
       </View>
       <Modal visible={isModalVisible} style={styles.modal}>
         <View style={styles.response}>
-          <Text style={{marginTop: 200}}> {myText}</Text>
+          <Text style={styles.label}> {myLabel}</Text>
+          <Text style={styles.solution}> {mySolution}</Text>
         </View>
           <TouchableOpacity onPress={()=>functionCombined()} style={styles.close_button}>
             <Text>Close</Text>
@@ -162,5 +165,12 @@ const styles = StyleSheet.create({
   modal: {
     justifyContent: 'center',
     alignItems: 'center',
-  }
+  },
+
+  label: {
+    marginTop: 200,
+    fontSize: 50,
+    backgroundColor: 'red',
+    height: 100,
+  },
 });
