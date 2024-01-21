@@ -19,7 +19,7 @@ def upload_media():
     file = request.files['file']
     if file.filename == '':
         return jsonify({'error':'no file selected'}), 400
-    if file and allowed_file(file.filename):
+    if file:
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         response_string=localize_objects(f"./images/{filename}")
