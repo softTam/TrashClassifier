@@ -31,36 +31,30 @@ export default function App() {
         console.log(data);
         setImage(data.uri);
         
-        var photo = {
+        const image = new FormData();
+        image.append('input_image', 'testName'); // you can append anyone.
+        image.append('photo', {
           uri: data.uri,
-          type: 'image/jpeg',
-          name: '1.jpeg',
-        };
-        var form = new FormData();
-        form.append("Input_Image", photo);
-        
+          type: 'image/jpeg', // or photo.type
+          name: '1'
+        });
         fetch(
           'https://real-trash-app.onrender.com/media/upload',
           {
-            body: form,
-            method: "PUT",
-            headers: {
-              'Content-Type': 'multipart/form-data'
-            }
-          }
-        ).then((response) => response.json())
-        .catch((error) => {
-          alert("ERROR " + error)
-        })
-        .then((responseData) => {
-          alert("Succes "+ responseData)
-        }).done();
-      } catch(e) {
-        console.log(e);
-      }
-  
+            method: 'post',
+            body: image
+          }).then(res => {
+            console.log(res)
+          }).catch((error) => {
+            alert("ERROR " + error)
+          })
+          .then((responseData) => {
+            alert("Succes "+ responseData)
+          }).done();
 
-
+        } catch(e) {
+          console.log(e);
+        }
     }
   }
 
