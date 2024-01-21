@@ -37,7 +37,6 @@ export default function App() {
           uri: photo.uri,
         });
         // {"file": photo.uri}
-        console.log(image)
         fetch("https://real-trash-app.onrender.com/media/upload", {
           method: "POST",
           body: image
@@ -45,12 +44,9 @@ export default function App() {
           .then(response => response.json())
           .then(response => {
             console.log("upload succes", response);
-            alert("Upload success!");
             this.setState({ photo: null });
           })
           .catch(error => {
-            console.log("upload error", error);
-            alert("Upload failed!");
           });
 
         } catch(e) {
