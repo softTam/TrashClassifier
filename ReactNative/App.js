@@ -1,20 +1,9 @@
 import React, { useState, useEffect, useRef} from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, Modal, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Modal, Animated } from 'react-native';
 import { Camera, CameraType } from 'expo-camera';
 import { Entypo } from '@expo/vector-icons'
 import * as MediaLibrary from 'expo-media-library';
 import Button from './src/components/Button';
-
-const ModalPoup = ({visible, children}) => {
-  const [showModal, setShowModal] = useState(visible);
-  return (
-    <Modal transparent visible={true}>
-      <View> style={styles.modalBackground}
-        <View> style={styles.modalContainer}</View>
-      </View>
-    </Modal>
-  )
-}
 
 export default function App() {
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
@@ -22,6 +11,7 @@ export default function App() {
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [flash, setFlash] = useState(Camera.Constants.FlashMode.off);
   const cameraRef = useRef(null);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -29,7 +19,7 @@ export default function App() {
       const cameraStatus = await Camera.requestCameraPermissionsAsync();
       setHasCameraPermission(cameraStatus.status === "granted");
     })();
-  }, [])
+  }, []);
 
   if(hasCameraPermission === false) {
     return <Text>No access to camera</Text>
@@ -48,7 +38,7 @@ export default function App() {
           uri: photo.uri,
         });
         // {"file": photo.uri}
-        fetch("https://real-trash-app.onrender.com/media/upload", {
+        fetch("https://wastewisely.loca.lt/media/upload", {
           method: "POST",
           body: image
         })
@@ -82,11 +72,6 @@ export default function App() {
         }
         <Button title={'Take a picture'} icon="camera" onPress={() => takePicture()}/>
       </View>
-        <View styles={{flex: 1, }}>
-          <ModalPoup visible = {visible}>
-          </ModalPoup>
-          <Button title='Press' onPress={() => setVisible(true)} />
-        </View>
     </View>
   );
 }
@@ -147,10 +132,4 @@ const styles = StyleSheet.create({
   touchable: {
     borderWidth: 1
   },
-
-  modalContainer: {
-    width: '80%',
-    backgroundColor: 'white',
-    padding: 20
-  }
 });
