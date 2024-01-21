@@ -29,29 +29,10 @@ export default function App() {
       try{
         const data = await cameraRef.current.takePictureAsync();
         console.log(data);
-        setImage(data.uri);
-        
-        const image = new FormData();
-        image.append('input_image', 'testName'); // you can append anyone.
-        image.append('photo', {
-          uri: data.uri,
-          type: 'image/jpeg', // or photo.type
-          name: '1'
-        });
-        fetch(
-          'https://real-trash-app.onrender.com/media/upload',
-          {
-            method: 'post',
-            body: image
-          }).then(res => {
-            console.log(res)
-          }).catch((error) => {
-            alert("ERROR " + error)
-          })
-          .then((responseData) => {
-            alert("Succes "+ responseData)
-          }).done();
 
+        const response = await fetch("https://real-trash-app.onrender.com/");
+        const movies = await response.json();
+        console.log(movies);
         } catch(e) {
           console.log(e);
         }
