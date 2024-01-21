@@ -26,7 +26,7 @@ def solution(item_description):
     completion = client.chat.completions.create(model="gpt-3.5-turbo", messages=messages)
   response1 = completion.choices[0].message.content
   # print(f"{response1}")
-  edit_response1 = response1.replace(".", "")
+  edit_response1 = response1.replace(".", "")   # trash classification
 
   question2 = "What to do with " + item_description + " as " + edit_response1 + " trash? (summary)"
   # print(question2)
@@ -36,8 +36,8 @@ def solution(item_description):
       {"role": "user", "content": message2},
     )
     completion = client.chat.completions.create(model="gpt-3.5-turbo", messages=messages)
-  response2 = completion.choices[0].message.content
-  return response2
+  response2 = completion.choices[0].message.content   # handling instruction
+  return {"Category" : edit_response1, "Msg" : response2}
 
 
 

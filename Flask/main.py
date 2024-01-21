@@ -24,7 +24,10 @@ def upload_media():
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         response_string=localize_objects(f"./images/{filename}")
         response_string = solution(response_string)
-        response = jsonify({'msg': response_string})
+
+        # response = jsonify({'msg': response_string})
+        response = jsonify(response_string)
+
         os.remove(f'./images/{filename}')
         return response
     return jsonify({'error':'no file exisited'}), 400
