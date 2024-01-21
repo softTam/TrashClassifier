@@ -1,18 +1,22 @@
 import React, { useState, useEffect, useRef} from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, Modal, Animated } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Modal, Animated, TouchableWithoutFeedback } from 'react-native';
 import { Camera, CameraType } from 'expo-camera';
 import { Entypo } from '@expo/vector-icons'
 import * as MediaLibrary from 'expo-media-library';
 import Button from './src/components/Button';
-
 export default function App() {
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [image, setImage] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [flash, setFlash] = useState(Camera.Constants.FlashMode.off);
   const cameraRef = useRef(null);
-  const [visible, setVisible] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [myText, setMyText] = useState("Few Seconds ...");
 
+  functionCombined = () => {
+    setIsModalVisible(false);
+    setMyText('Few seconds ...');
+  } 
   useEffect(() => {
     (async () => {
       MediaLibrary.requestPermissionsAsync();
@@ -28,6 +32,7 @@ export default function App() {
   const takePicture = async () => {
     if(cameraRef) {
       try{
+        setIsModalVisible(true);
         const photo = await cameraRef.current.takePictureAsync();
         console.log(photo);
 
@@ -44,7 +49,8 @@ export default function App() {
         })
           .then(response => response.json())
           .then(response => {
-            console.log("upload succes", response);
+            setMyText(response['Category'])
+            console.log("upload succes", response['Category']);
             this.setState({ photo: null });
           })
           .catch(error => {
@@ -55,6 +61,7 @@ export default function App() {
         }
     }
   }
+
 
   return (
     <View style={styles.container}>
@@ -72,6 +79,14 @@ export default function App() {
         }
         <Button title={'Take a picture'} icon="camera" onPress={() => takePicture()}/>
       </View>
+      <Modal visible={isModalVisible} style={styles.modal}>
+        <View style={styles.response}>
+          <Text style={{marginTop: 200}}> {myText}</Text>
+        </View>
+          <TouchableOpacity onPress={()=>functionCombined()} style={styles.close_button}>
+            <Text>Close</Text>
+          </TouchableOpacity>
+      </Modal>
     </View>
   );
 }
@@ -132,4 +147,20 @@ const styles = StyleSheet.create({
   touchable: {
     borderWidth: 1
   },
+
+  close_button: { 
+    height: 70,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: 50,
+    borderRadius: 10,
+    borderColor: 'black',
+    borderWidth: 1,
+    marginTop: 400
+  },
+  modal: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
 });
